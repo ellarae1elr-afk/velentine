@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Beautiful Wife ❤️</title>
+    <style>
+        body {
+            background-color: #ffeef2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.2);
+            max-width: 450px;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            font-size: 24px;
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+
+        .gif-container img {
+            width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: #ff4b6e;
+            color: white;
+        }
+
+        #yesBtn:hover {
+            background-color: #e6395c;
+            transform: scale(1.1);
+        }
+
+        #noBtn {
+            background-color: #ccc;
+            color: #555;
+            position: absolute;
+            left: 110px; /* Initial offset from center */
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4b6e;
+            font-size: 20px;
+            pointer-events: none;
+            animation: float 3s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        #celebration {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <div id="quiz">
+            <div class="gif-container">
+                <!-- Using a cute cat GIF as a placeholder -->
+                <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHpwaHkyem41ZW94eTVoamR5amN5eXhyeXhyeXhyeXhyeXhyeHl4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbxxvDUQM/giphy.gif" alt="Cute Cat">
+            </div>
+            <h1 id="questionText">Ready for a surprise, my love?</h1>
+            <div class="buttons">
+                <button id="yesBtn">Yes!</button>
+                <button id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div id="celebration">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnZ5ZXh2ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZWZ4ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/L2z7uYM5qn85gXY9Dc/giphy.gif" alt="Hearts" width="200">
+            <h1 style="color: #ff4b6e;">Yay! You're stuck with me forever! ❤️</h1>
+            <p>I love you more than words can say. See you tonight! 😘</p>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "Am I still your favorite person in the whole world?",
+            "Do you promise to let me annoy you forever?",
+            "Are you ready to be the most beautiful woman on a date tonight?",
+            "Is it true that I have the best wife in the universe?",
+            "Will you be my Valentine?"
+        ];
+
+        let currentQuestionIndex = 0;
+        const questionText = document.getElementById('questionText');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const quizDiv = document.getElementById('quiz');
+        const celebrationDiv = document.getElementById('celebration');
+
+        // Logic for "No" button running away
+        const moveButton = () => {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        };
+
+        noBtn.addEventListener('mouseenter', moveButton);
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveButton(); // Extra check if they try to click fast
+        });
+
+        // Logic for "Yes" button progression
+        yesBtn.addEventListener('click', () => {
+            if (currentQuestionIndex < questions.length) {
+                questionText.innerText = questions[currentQuestionIndex];
+                currentQuestionIndex++;
+                
+                // Reset No button to original spot momentarily or just let it fly
+                if (currentQuestionIndex === 1) {
+                    noBtn.innerText = "Still No?";
+                }
+            } else {
+                showCelebration();
+            }
+        });
+
+        function showCelebration() {
+            quizDiv.style.display = 'none';
+            celebrationDiv.style.display = 'block';
+            
+            // Create floating hearts
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
